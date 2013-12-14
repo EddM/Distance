@@ -29,6 +29,7 @@ class GameWindow < Gosu::Window
   end
 
   def update
+    self.caption = "#{fps} FPS"
     fire! if button_down? MsLeft
     exit if button_down? KbEscape
 
