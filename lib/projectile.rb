@@ -2,7 +2,7 @@ class Projectile < Entity
 
   Size = 5.0
 
-  def initialize(x, y, environment, velocity = 850)    
+  def initialize(x, y, environment, velocity = 800)
     super(x - (Size / 2.0), y - (Size / 2.0))
     @environment = environment
     @velocity = velocity
@@ -19,7 +19,6 @@ class Projectile < Entity
     # Bullet drop
     @y += Math::Constants::Gravity / $window.update_interval
 
-    # Wind effects -- TO BE PERFECTED
     if @environment.wind_direction == :east
       @x += @environment.wind_speed / $window.update_interval
     elsif @environment.wind_direction == :west

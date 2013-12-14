@@ -12,7 +12,7 @@ class GameWindow < Gosu::Window
 
     @enemy = Enemy.new(200, 200, 16_500) # at 16.5km
     @obstacle = GameObject.new(210, 150, 16_000, 25, 200) # at 16.0km
-    @environment = Environment.new(200, :east)
+    @environment = Environment.new(13, :east)
 
     @enemy.path = [
       { :type => :movement, :target => [300, 250] },
@@ -39,10 +39,8 @@ class GameWindow < Gosu::Window
 
   def fire!
     unless @projectile
-      @firing = true
       @projectile = Projectile.new(mouse_x, mouse_y, @environment)
       @projectile.targets = [@enemy, @obstacle]
-      puts "pew pew"
     end
   end
 

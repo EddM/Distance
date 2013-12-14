@@ -4,7 +4,7 @@ class Environment
 
   # wind speed in km/h
   def initialize(wind_speed = 0.0, wind_direction = :n)
-    @wind_speed = wind_speed.to_f / 3600
+    @wind_speed = (wind_speed.to_f * 1000) / 3600
     @wind_direction = wind_direction
   end
 
