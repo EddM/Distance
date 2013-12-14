@@ -7,7 +7,7 @@ module Rect
   end
 
   def bottom
-    x + height
+    y + height
   end
   
   def intersects_point?(p_x, p_y)

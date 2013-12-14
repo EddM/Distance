@@ -2,7 +2,7 @@ class Projectile < Entity
 
   Size = 4.0
 
-  def initialize(x, y, environment, velocity = 800)
+  def initialize(x, y, environment, velocity = 750)
     super(x - (Size / 2.0), y - (Size / 2.0))
     @environment = environment
     @velocity = velocity
@@ -14,7 +14,7 @@ class Projectile < Entity
   def update
     # Move forward in space
     @previous_distance = @distance
-    @distance += @velocity
+    @distance += @velocity / $window.update_interval
 
     # Bullet drop
     @y += Math::Constants::Gravity / $window.update_interval
@@ -28,7 +28,6 @@ class Projectile < Entity
     # Check targets
     @targets.each do |t|
       if (t.distance == @distance || (t.distance > @previous_distance && t.distance < @distance)) && t.intersects_point?(@x, @y)
-
         if t.is_a?(GameObject)
           if t.penetrable?
             @targets.delete(t) if t.remove
@@ -60,7 +59,7 @@ class Projectile < Entity
   private
 
   def remove
-    $window.projectile = nil
+    Level.current.projectile = nil
   end
 
 end
