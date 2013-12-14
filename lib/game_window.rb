@@ -10,7 +10,7 @@ class GameWindow < Gosu::Window
     super(w, h, full)
     $window = self
 
-    @enemy = Enemy.new(200, 200, 7500) # at 7.5km
+    @enemy = Enemy.new(200, 200, 16_500) # at 16.5km
     @environment = Environment.new(200, :east)
   end
 

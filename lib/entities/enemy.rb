@@ -11,7 +11,7 @@ class Enemy < EntityWithDepth
 
   def draw
     unless @dead
-      $window.draw_square @x, @y, 50, @color, -@distance
+      $window.draw_square @x, @y, width, @color, -@distance
     end
   end
 

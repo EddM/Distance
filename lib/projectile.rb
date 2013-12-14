@@ -4,7 +4,7 @@ class Projectile < Entity
 
   Size = 5.0
 
-  def initialize(x, y, environment, velocity = 250)    
+  def initialize(x, y, environment, velocity = 850)    
     super(x - (Size / 2.0), y - (Size / 2.0))
     @environment = environment
     @velocity = velocity
