@@ -1,3 +1,8 @@
+source 'https://rubygems.org' 
+
+# General
+gem 'require_all'
+
 # Engine
 gem 'gosu'
 
