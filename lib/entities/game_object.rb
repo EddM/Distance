@@ -1,5 +1,9 @@
 class GameObject < EntityWithDepth
 
+  def penetrable?
+    false
+  end
+
   def draw
     color = Gosu::Color.argb(0xffffffff)
     $window.draw_quad x, y, color,

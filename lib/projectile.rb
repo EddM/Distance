@@ -30,8 +30,16 @@ class Projectile < Entity
     @targets.each do |t|
       if (t.distance == @distance || (t.distance > @previous_distance && t.distance < @distance)) && t.intersects_point?(@x, @y)
         remove
-        @targets.delete t
-        t.die! if t.is_a?(Enemy)
+
+        if t.is_a?(GameObject)
+          if t.penetrable?
+            @targets.delete(t)
+            t.remove
+          end
+        elsif t.is_a?(Enemy)
+          @targets.delete(t)
+          t.die!
+        end
       end
     end
 
