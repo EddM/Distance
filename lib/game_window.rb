@@ -4,7 +4,7 @@ class GameWindow < Gosu::Window
   attr_accessor :projectile
 
   # The horizon - the point at which projectiles disappear
-  HorizonZ = 35_000
+  HorizonMax = 35_000
 
   def initialize(w, h, full = false)
     super(w, h, full)
