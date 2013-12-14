@@ -4,7 +4,7 @@ class Level1 < Level
     super
     @environment = Environment.new(5, :east)
     @texts = [
-      TextTyper.new(50, 550, "LOC: 4, 8, 15"),
+      TextTyper.new(50, 550, "LOC: 4N 8X 15Y"),
       TextTyper.new(50, 575, "TGT: CLASSIFIED"),
       TextTyper.new(50, 600, "WIND: #{@environment.wind_direction.to_s[0..0].upcase}, #{@environment.wind_speed.to_i} km/h")
     ]

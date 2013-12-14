@@ -52,7 +52,7 @@ class Projectile < Entity
 
   def draw
     @size = Size - (Size * (@distance / GameWindow::HorizonMax))
-    $window.draw_square(@x, @y, @size, Gosu::Color::RED, -@distance)
+    $window.draw_square(@x, @y, @size, Gosu::Color.argb(0xffff7200), -@distance)
   end
 
   def targets=(array)
