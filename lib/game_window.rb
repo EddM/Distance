@@ -11,6 +11,7 @@ class GameWindow < Gosu::Window
     $window = self
 
     @enemy = Enemy.new(200, 200, 100)
+    @environment = Environment.new(200, :east)
   end
 
   def draw
@@ -20,14 +21,14 @@ class GameWindow < Gosu::Window
 
   def update
     fire! if button_down? MsLeft
-
+    exit if button_down? KbEscape
     @projectile.update if @projectile
   end
 
   def fire!
     unless @projectile
       @firing = true
-      @projectile = Projectile.new(mouse_x, mouse_y)
+      @projectile = Projectile.new(mouse_x, mouse_y, @environment)
       puts "pew pew"
     end
   end
