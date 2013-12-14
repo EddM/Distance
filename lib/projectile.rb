@@ -1,7 +1,5 @@
 class Projectile < Entity
 
-  attr_accessor :targets
-
   Size = 5.0
 
   def initialize(x, y, environment, velocity = 850)    
@@ -33,7 +31,7 @@ class Projectile < Entity
       if (t.distance == @distance || (t.distance > @previous_distance && t.distance < @distance)) && t.intersects_point?(@x, @y)
         remove
         @targets.delete t
-        t.die!
+        t.die! if t.is_a?(Enemy)
       end
     end
 
@@ -44,6 +42,10 @@ class Projectile < Entity
   def draw
     @size = Size - (Size * (@distance / GameWindow::HorizonMax))
     $window.draw_square(@x, @y, @size, Gosu::Color::RED, -@distance)
+  end
+
+  def targets=(array)
+    @targets = array.sort_by { |t| t.distance }
   end
 
   private

@@ -11,11 +11,13 @@ class GameWindow < Gosu::Window
     $window = self
 
     @enemy = Enemy.new(200, 200, 16_500) # at 16.5km
+    @obstacle = GameObject.new(210, 150, 16_000, 25, 200) # at 16.0km
     @environment = Environment.new(200, :east)
   end
 
   def draw
     @enemy.draw
+    @obstacle.draw
     @projectile.draw if @projectile
   end
 
@@ -29,7 +31,7 @@ class GameWindow < Gosu::Window
     unless @projectile
       @firing = true
       @projectile = Projectile.new(mouse_x, mouse_y, @environment)
-      @projectile.targets = [@enemy]
+      @projectile.targets = [@enemy, @obstacle]
       puts "pew pew"
     end
   end
