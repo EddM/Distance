@@ -23,6 +23,7 @@ class GameWindow < Gosu::Window
   end
 
   def draw
+    draw_background
     @enemy.draw
     @obstacle.draw
     @projectile.draw if @projectile
@@ -53,6 +54,15 @@ class GameWindow < Gosu::Window
               x + size, y, color,
               x, y + size, color,
               x + size, y + size, color, z
+  end
+
+  private
+
+  def draw_background
+    draw_quad 0, 0, Color.argb(0xffffffff),
+              width, 0, Color.argb(0xffffffff),
+              0, height, Color.argb(0xffffffff),
+              width, height, Color.argb(0xffffffff), -HorizonMax
   end
 
 end
