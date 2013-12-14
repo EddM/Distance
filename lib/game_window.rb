@@ -4,13 +4,13 @@ class GameWindow < Gosu::Window
   attr_accessor :projectile
 
   # The horizon - the point at which projectiles disappear
-  HorizonMax = 35_000
+  HorizonMax = 35000
 
   def initialize(w, h, full = false)
     super(w, h, full)
     $window = self
 
-    @enemy = Enemy.new(200, 200, 100)
+    @enemy = Enemy.new(200, 200, 7500) # at 7.5km
     @environment = Environment.new(200, :east)
   end
 
@@ -29,6 +29,7 @@ class GameWindow < Gosu::Window
     unless @projectile
       @firing = true
       @projectile = Projectile.new(mouse_x, mouse_y, @environment)
+      @projectile.targets = [@enemy]
       puts "pew pew"
     end
   end
@@ -37,11 +38,11 @@ class GameWindow < Gosu::Window
     true
   end
 
-  def draw_square(x, y, size, color = Color.argb(0xff00ffff))
+  def draw_square(x, y, size, color = Color.argb(0xff00ffff), z = 1)
     draw_quad x, y, color,
               x + size, y, color,
               x, y + size, color,
-              x + size, y + size, color
+              x + size, y + size, color, z
   end
 
 end

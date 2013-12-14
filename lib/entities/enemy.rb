@@ -1,7 +1,8 @@
-class Enemy
-  
-  def initialize(x, y, z)
-    @x, @y, @z = x, y, z
+class Enemy < EntityWithDepth
+
+  def initialize(x, y, distance)
+    super(x, y, distance)
+    @color = Gosu::Color.argb(0xff00ff00)
   end
 
   def update
@@ -9,7 +10,13 @@ class Enemy
   end
 
   def draw
-    $window.draw_square @x, @y, 50
+    unless @dead
+      $window.draw_square @x, @y, 50, @color, -@distance
+    end
+  end
+
+  def die!
+    @dead = true
   end
 
 end

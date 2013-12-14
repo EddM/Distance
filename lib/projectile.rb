@@ -1,22 +1,25 @@
 class Projectile < Entity
 
+  attr_accessor :targets
+
   Size = 5.0
-  Gravity = 9.81 # m/s
 
   def initialize(x, y, environment, velocity = 250)    
     super(x - (Size / 2.0), y - (Size / 2.0))
     @environment = environment
     @velocity = velocity
     @distance = 0.0
+    @previous_distance = 0.0
     @size = Size
   end
 
   def update
     # Move forward in space
+    @previous_distance = @distance
     @distance += @velocity
 
     # Bullet drop
-    @y += Gravity / $window.update_interval
+    @y += Math::Constants::Gravity / $window.update_interval
 
     # Wind effects -- TO BE PERFECTED
     if @environment.wind_direction == :east
@@ -25,13 +28,22 @@ class Projectile < Entity
       @x -= @environment.wind_speed / $window.update_interval
     end
 
+    # Check targets
+    @targets.each do |t|
+      if (t.distance == @distance || (t.distance > @previous_distance && t.distance < @distance)) && t.intersects_point?(@x, @y)
+        remove
+        @targets.delete t
+        t.die!
+      end
+    end
+
     # Go away if beyond boundary
     remove if @distance >= GameWindow::HorizonMax
   end
 
   def draw
     @size = Size - (Size * (@distance / GameWindow::HorizonMax))
-    $window.draw_square(@x, @y, @size, Gosu::Color::RED)
+    $window.draw_square(@x, @y, @size, Gosu::Color::RED, -@distance)
   end
 
   private
