@@ -18,10 +18,13 @@ class Level1 < Level
       { :type => :movement, :target => [25, 105] },
       { :type => :wait, :period => 250 }
     ]
+
     add_enemy enemy
 
+    @fence = Fence.new(0, 155)
+    add_scenery @fence
+
     @background = Gosu::Image.new($window, "res/level1/bg.png", false)
-    @fence = Gosu::Image.new($window, "res/level1/fence.png", false)
 
     Level.current = self
   end
@@ -34,7 +37,6 @@ class Level1 < Level
     super
 
     @background.draw 0, 0, -Z::Background
-    @fence.draw 0, 155, -1450
   end
 
 end
