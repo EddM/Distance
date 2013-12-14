@@ -13,6 +13,13 @@ class GameWindow < Gosu::Window
     @enemy = Enemy.new(200, 200, 16_500) # at 16.5km
     @obstacle = GameObject.new(210, 150, 16_000, 25, 200) # at 16.0km
     @environment = Environment.new(200, :east)
+
+    @enemy.path = [
+      { :type => :movement, :target => [300, 250] },
+      { :type => :wait, :period => 3000 },
+      { :type => :movement, :target => [200, 200] },
+      { :type => :wait, :period => 1000 }
+    ]
   end
 
   def draw
@@ -24,6 +31,8 @@ class GameWindow < Gosu::Window
   def update
     fire! if button_down? MsLeft
     exit if button_down? KbEscape
+
+    @enemy.update
     @projectile.update if @projectile
   end
 

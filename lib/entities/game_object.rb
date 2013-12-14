@@ -1,7 +1,7 @@
 class GameObject < EntityWithDepth
 
   def penetrable?
-    true
+    false
   end
 
   def draw
