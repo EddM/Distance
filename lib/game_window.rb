@@ -1,7 +1,7 @@
 class GameWindow < Gosu::Window
   include Gosu
 
-  attr_reader :sound_manager, :font, :big_font
+  attr_reader :state_manager, :sound_manager, :font, :big_font
 
   # The horizon - the point at which projectiles disappear
   HorizonMax = 5_000
@@ -14,19 +14,20 @@ class GameWindow < Gosu::Window
     @font = Font.new(self, "Silom", 18)
     @big_font = Font.new(self, "Silom", 32)
 
-    @level = Level1.new
+    @state_manager = GameStateManager.new
+    # @state_manager << MenuState.new
+    @state_manager << GameplayState.new
   end
 
   def draw
-    @level.draw
+    @state_manager.current.draw
   end
 
   def update
     self.caption = "#{fps} FPS"
     exit if button_down? KbEscape
 
-    @level.update
-    @level.fire! if button_down? MsLeft
+    @state_manager.current.update
   end
 
   def needs_cursor?

@@ -6,6 +6,7 @@ class Level
   def initialize
     @enemies, @objects, @scenery = [], [], []
     @scope = Gosu::Image.new($window, "res/scope1.png", false)
+    Level.current = self
   end
 
   def update
@@ -13,6 +14,12 @@ class Level
 
     @enemies.each { |e| e.update }
     @objects.each { |e| e.update }
+
+    if @distance_text
+      @distance_text.opacity -= 0.02
+      @distance_text.update
+      @distance_text = nil if @distance_text.opacity <= 0
+    end
   end
 
   def draw
@@ -22,6 +29,10 @@ class Level
     @objects.each { |e| e.draw }
     @scenery.each { |e| e.draw } 
 
+    if @distance_text
+      @distance_text.draw
+    end
+
     draw_scope
   end
 
@@ -29,6 +40,17 @@ class Level
     unless @projectile
       @projectile = Projectile.new($window.mouse_x, $window.mouse_y, @environment)
       @projectile.targets = @enemies + @objects + @scenery
+    end
+  end
+
+  def check_distance
+    unless @distance_text
+      (@enemies + @objects).sort_by { |t| t.distance }.each do |target|
+        if target.intersects_point?($window.mouse_x, $window.mouse_y)
+          @distance_text = TextTyper.new($window.mouse_x + 25, $window.mouse_y + 25, "RNG: #{target.distance}M")
+          return
+        end
+      end
     end
   end
 
