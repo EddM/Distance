@@ -1,7 +1,7 @@
 class Level
 
   attr_accessor :projectile
-  attr_reader :environment
+  attr_reader :environment, :enemies, :objects
 
   def initialize
     @enemies, @objects, @scenery = [], [], []
@@ -42,6 +42,11 @@ class Level
 
   def add_scenery(object)
     @scenery << object
+  end
+
+  # Level end logic?
+  def remove_projectile
+    raise "Not yet implemented"
   end
 
   def self.current=(level)

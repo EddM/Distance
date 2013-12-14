@@ -9,6 +9,8 @@ class Projectile < Entity
     @distance = 0.0
     @previous_distance = 0.0
     @size = Size
+
+    $window.sound_manager.play! :shoot1
   end
 
   def update
@@ -37,6 +39,7 @@ class Projectile < Entity
           end
         elsif t.is_a?(Enemy)
           @targets.delete(t)
+          Level.current.enemies.delete(t)
           t.die!(@x, @y)
           remove
         end
@@ -59,7 +62,7 @@ class Projectile < Entity
   private
 
   def remove
-    Level.current.projectile = nil
+    Level.current.remove_projectile
   end
 
 end

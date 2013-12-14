@@ -1,12 +1,18 @@
 class GameWindow < Gosu::Window
   include Gosu
 
+  attr_reader :sound_manager, :font, :big_font
+
   # The horizon - the point at which projectiles disappear
   HorizonMax = 5_000
 
   def initialize(w, h, full = false)
     super(w, h, full)
     $window = self
+
+    @sound_manager = SoundManager.new
+    @font = Font.new(self, "Silom", 18)
+    @big_font = Font.new(self, "Silom", 32)
 
     @level = Level1.new
   end
