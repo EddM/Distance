@@ -1,6 +1,6 @@
 class Projectile < Entity
 
-  Size = 5.0
+  Size = 4.0
 
   def initialize(x, y, environment, velocity = 800)
     super(x - (Size / 2.0), y - (Size / 2.0))
@@ -38,7 +38,7 @@ class Projectile < Entity
           end
         elsif t.is_a?(Enemy)
           @targets.delete(t)
-          t.die!
+          t.die!(@x, @y)
           remove
         end
       end

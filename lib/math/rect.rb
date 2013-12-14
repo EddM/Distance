@@ -1,5 +1,7 @@
 module Rect
 
+  attr_reader :x, :y, :width, :height
+
   def right
     x + width
   end
@@ -9,7 +11,7 @@ module Rect
   end
   
   def intersects_point?(p_x, p_y)
-    x <= p_x && right >= p_x && y <= p_y && bottom >= p_y
+    p_x >= x && p_x <= right && p_y >= y && p_y <= bottom
   end
 
 end

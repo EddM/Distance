@@ -47,8 +47,14 @@ class Enemy < EntityWithDepth
     end
   end
 
-  def die!
+  def die!(hit_x, hit_y)
+    headshot_box = BasicRect.new(x, y, width, height * 0.25)
+    headshot! if headshot_box.intersects_point?(hit_x, hit_y)
     @dead = true
+  end
+
+  def headshot!
+    puts "boom headshot"
   end
 
   def path=(steps)
