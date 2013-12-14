@@ -1,7 +1,7 @@
 class GameObject < EntityWithDepth
 
   def penetrable?
-    false
+    true
   end
 
   def draw
@@ -10,6 +10,10 @@ class GameObject < EntityWithDepth
                       x + width, y, color,
                       x, y + height, color,
                       x + width, y + height, color, -@distance
+  end
+
+  def remove
+    # Doesn't necessarily need to do anything
   end
 
 end
