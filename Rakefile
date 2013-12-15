@@ -27,3 +27,8 @@ end
 task :icons do
   `iconutil -c icns res/Icon.iconset`
 end
+
+task :ocra do
+  `socra run.rb --add-all-core --gemfile Gemfile --no-e
+nc`
+end
