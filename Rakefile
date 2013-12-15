@@ -20,6 +20,7 @@ Releasy::Project.new do
   end
   
   add_build :windows_standalone do
+    executable_type :windows
   end
 end
 
