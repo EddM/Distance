@@ -8,9 +8,9 @@ class Level
     @name, @description = name, description
     @scope = Gosu::Image.new($window, "res/scope1.png", false)
 
+    TextTyper.type_locked = nil
     @stage_text = TextTyper.new(300, 250, @name, $window.big_font)
     @desc_text = TextTyper.new(300, 300, @description)
-    @proceed_text = TextTyper.new(300, 400, "Click to begin")
 
     Level.current = self
   end
@@ -25,7 +25,7 @@ class Level
     unless playing?
       @stage_text.update
       @desc_text.update
-      @proceed_text.update
+      # @proceed_text.update
 
       unless $window.input_disabled?
         if $window.button_down? Gosu::MsLeft
@@ -38,7 +38,10 @@ class Level
     else
       if @game_over
         unless $window.input_disabled?
-          restart if $window.button_down? Gosu::MsLeft
+          if $window.button_down? Gosu::MsLeft
+            TextTyper.type_locked = nil
+            restart
+          end
         end
       else
         unless $window.input_disabled?
@@ -69,7 +72,9 @@ class Level
                         $window.width, $window.height, Gosu::Color::BLACK, Z::UI
       @stage_text.draw 
       @desc_text.draw
-      @proceed_text.draw
+
+      $window.font.draw "Click to begin", 308, 400, Z::UI
+      # @proceed_text.draw
     else
       @enemies.each { |e| e.draw }
       @objects.each { |e| e.draw }

@@ -2,7 +2,7 @@ class Level1 < Level
   
   def initialize
     super("Stage 1, Compound Perimeter", "Clear the guard tower.")
-    @environment = Environment.new(5, :east)
+    @environment = Environment.new(4, :east)
     @weapon = PSG1.new
 
     TextTyper.type_locked = nil
@@ -10,7 +10,7 @@ class Level1 < Level
       TextTyper.new(50, 550, "LOC: PERIMETER 4N 8X 15Y"),
       TextTyper.new(50, 575, "TGT: CLASSIFIED"),
       TextTyper.new(50, 600, "WEP: #{@weapon.name}, #{@weapon.velocity} m/s"),
-      TextTyper.new(50, 625, "ENV: WIND #{@environment.wind_direction.to_s[0..0].upcase}, #{@environment.wind_speed.to_i} km/h#{", #{@environment.weather.to_s.upcase}" if @environment.weather != :normal}")
+      TextTyper.new(50, 625, "ENV: WIND #{@environment.wind_direction.to_s[0..0].upcase}, 4 km/h#{", #{@environment.weather.to_s.upcase}" if @environment.weather != :normal}")
     ]
 
     enemy = MaskedSoldier.new(25, 105, 1501)
@@ -58,11 +58,6 @@ class Level1 < Level
 
   def remove_projectile
     @projectile = nil
-    if @enemies.any?
-      game_over
-    else
-      $window.state_manager.current.next_level
-    end
   end
 
 end

@@ -67,7 +67,6 @@ class Enemy < EntityWithDepth
   def headshot!
     $window.sound_manager.play! :headshot
     $window.player.score += 500
-    puts "boom headshot"
   end
 
   def path=(steps)
