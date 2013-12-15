@@ -58,6 +58,7 @@ class Enemy < EntityWithDepth
 
   def die!(hit_x, hit_y)
     $window.sound_manager.play! :hurt
+    $window.player.score += 1250
     headshot_box = BasicRect.new(x, y, width, height * HeadshotThreshold)
     headshot! if headshot_box.intersects_point?(hit_x, hit_y)
     @dead = true
@@ -65,6 +66,7 @@ class Enemy < EntityWithDepth
 
   def headshot!
     $window.sound_manager.play! :headshot
+    $window.player.score += 500
     puts "boom headshot"
   end
 
