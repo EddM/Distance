@@ -16,7 +16,8 @@ class GameWindow < Gosu::Window
 
     @state_manager = GameStateManager.new
     # @state_manager << MenuState.new
-    @state_manager << GameplayState.new
+    # @state_manager << GameplayState.new
+    @state_manager << IntroState.new
   end
 
   def draw

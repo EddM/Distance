@@ -1,5 +1,7 @@
 class Enemy < EntityWithDepth
 
+  HeadshotThreshold = 0.285
+
   def initialize(x, y, distance)
     super(x, y, distance)
     @color = Gosu::Color.argb(0xff00ff00)
@@ -55,12 +57,14 @@ class Enemy < EntityWithDepth
   end
 
   def die!(hit_x, hit_y)
-    headshot_box = BasicRect.new(x, y, width, height * 0.25)
+    $window.sound_manager.play! :hurt
+    headshot_box = BasicRect.new(x, y, width, height * HeadshotThreshold)
     headshot! if headshot_box.intersects_point?(hit_x, hit_y)
     @dead = true
   end
 
   def headshot!
+    $window.sound_manager.play! :headshot
     puts "boom headshot"
   end
 

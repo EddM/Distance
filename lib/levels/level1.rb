@@ -3,6 +3,8 @@ class Level1 < Level
   def initialize
     super
     @environment = Environment.new(5, :east, :snow)
+
+    TextTyper.type_locked = nil
     @texts = [
       TextTyper.new(50, 550, "LOC: 4N 8X 15Y"),
       TextTyper.new(50, 575, "TGT: CLASSIFIED"),
@@ -60,6 +62,7 @@ class Level1 < Level
 
   def game_over
     $window.sound_manager.play! :alarm
+    TextTyper.type_locked = nil
     @texts = [
       TextTyper.new(300, 300, "#{rand > 0.95 ? "FISSION MAILED" : "MISSION FAILED"}", $window.big_font),
       TextTyper.new(300, 350, "You missed the shot.", $window.big_font),
