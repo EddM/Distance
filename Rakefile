@@ -29,6 +29,5 @@ task :icons do
 end
 
 task :ocra do
-  `socra run.rb --add-all-core --gemfile Gemfile --no-e
-nc`
+  `ocra run.rb --add-all-core --gemfile Gemfile --no-enc`
 end
