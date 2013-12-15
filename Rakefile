@@ -31,5 +31,5 @@ namespace :icons do
 end
 
 task :ocra do
-  `ocra run.rb --add-all-core --gemfile Gemfile --no-enc`
+  `ocra run.rb --add-all-core --gemfile Gemfile --no-enc --icon res/Icon.ico`
 end
