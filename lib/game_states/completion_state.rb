@@ -1,0 +1,2 @@
+class CompletionState < GameState
+end

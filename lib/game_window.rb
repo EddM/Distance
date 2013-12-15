@@ -24,7 +24,7 @@ class GameWindow < Gosu::Window
 
   def update
     $input_disabled -= 1 if input_disabled?
-    self.caption = "#{fps} FPS"
+    self.caption = "Distance (#{fps} FPS)"
     exit if button_down? KbEscape
 
     @state_manager.current.update
@@ -37,6 +37,10 @@ class GameWindow < Gosu::Window
   def needs_cursor?
     # true
     false
+  end
+
+  def draw_triangle_rot(angle, x1, y1, c1, x2, y2, c2, x3, y3, c3, z = 0, mode = :default)
+    draw_triangle(x1, y1, c1, x2, y2, c2, x3, y3, c3, z, mode)
   end
 
   def draw_square(x, y, size, color = Color.argb(0xff00ffff), z = 1)
