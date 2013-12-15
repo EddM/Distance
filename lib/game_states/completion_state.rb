@@ -60,13 +60,13 @@ class CompletionState < GameState
 
   def message_data
     [
-      { "Colonel O'Shea" => "Good work, soldier. Unfortunately, the developer didn't have time \nto create any more levels, so that's it." },
+      { "Colonel Freeman" => "Good work, soldier. Unfortunately, the developer didn't have time \nto create any more levels, so that's it." },
       { "You" => "That lazy bum." },
-      { "Colonel O'Shea" => "Well he only had 48 hours. I think he's done a pretty good job.\nThat last level was hard, huh?" },
+      { "Colonel Freeman" => "Well he only had 48 hours. I think he's done a pretty good job.\nThat last level was hard, huh?" },
       { "You" => "Only 48 hours? Well, I stand corrected. He did a great job." },
-      { "Colonel O'Shea" => "Damn straight. Be sure to rate Distance on LudumDare.com and let \nEdd know what you thought of the game!" },
+      { "Colonel Freeman" => "Damn straight. Be sure to rate Distance on LudumDare.com and let \nEdd know what you thought of the game!" },
       { "You" => "I will. I heard you can find him on Twitter as @eddm, right?" },
-      { "Colonel O'Shea" => "Affirmative. Thanks for playing!" }
+      { "Colonel Freeman" => "Affirmative. Thanks for playing!" }
     ]
   end
 

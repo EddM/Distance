@@ -60,13 +60,13 @@ class IntroState < GameState
 
   def message_data
     [
-      { "Colonel O'Shea" => "... You'll be assiting Cobra Team in this operation. We need you to do \nwhat you do best: provide long-range fire support for Cobra's insertion plan, \ninfiltrate the compound and take out a number of high-value targets." },
+      { "Colonel Freeman" => "... You'll be assiting Cobra Team in this operation. We need you to do \nwhat you do best: provide long-range fire support for Cobra's insertion plan, \ninfiltrate the compound and take out a number of high-value targets." },
       { "You" => "I assume I won't be joining their party." },
-      { "Colonel O'Shea" => "No, you'll be splitting up from Cobra as soon as the chopper lands. \nDon't expect any support." },
+      { "Colonel Freeman" => "No, you'll be splitting up from Cobra as soon as the chopper lands. \nDon't expect any support." },
       { "You" => "Fine. I like a little alone time now and then." },
-      { "Colonel O'Shea" => "The compound features state-of-the-art intruder detection systems. \nAny stray gunfire will put the whole place on alert and could jeopardise Cobra Team. \nPrecision is paramount on this mission." },
+      { "Colonel Freeman" => "The compound features state-of-the-art intruder detection systems. \nAny stray gunfire will put the whole place on alert and could jeopardise Cobra Team. \nPrecision is paramount on this mission." },
       { "You" => "Precision's my middle name." },
-      { "Colonel O'Shea" => "Remember: shoot to kill. \n\nDon't miss a shot - you only get one. Move out." }
+      { "Colonel Freeman" => "Remember: shoot to kill. \n\nDon't miss a shot - you only get one. Move out." }
     ]
   end
 
