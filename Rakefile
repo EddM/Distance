@@ -3,7 +3,7 @@ require 'bundler/setup'
 require 'releasy'
 
 Releasy::Project.new do
-  name "Untitled"
+  name "Distance"
   version "1.0"
   verbose
 
