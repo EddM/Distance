@@ -1,14 +1,15 @@
 class Level1 < Level
   
   def initialize
-    super
+    super("Stage 1, Compound Perimeter", "Clear the guard tower.")
     @environment = Environment.new(5, :east, :snow)
+    @weapon = PSG1.new
 
     TextTyper.type_locked = nil
     @texts = [
-      TextTyper.new(50, 550, "LOC: 4N 8X 15Y"),
+      TextTyper.new(50, 550, "LOC: PERIMETER 4N 8X 15Y"),
       TextTyper.new(50, 575, "TGT: CLASSIFIED"),
-      TextTyper.new(50, 600, "WEP: HK PSG-1/7.62MM, 750 m/s"),
+      TextTyper.new(50, 600, "WEP: #{@weapon.name}, #{@weapon.velocity} m/s"),
       TextTyper.new(50, 625, "ENV: WIND #{@environment.wind_direction.to_s[0..0].upcase}, #{@environment.wind_speed.to_i} km/h#{", #{@environment.weather.to_s.upcase}" if @environment.weather != :normal}")
     ]
 
@@ -41,14 +42,18 @@ class Level1 < Level
   def update
     super
 
-    @texts.each { |t| t.update }
+    if playing?
+      @texts.each { |t| t.update }
+    end
   end
 
   def draw
     super
 
-    @texts.each { |t| t.draw }
-    @background.draw 0, 0, -Z::Background
+    if playing?
+      @texts.each { |t| t.draw }
+      @background.draw 0, 0, -Z::Background
+    end
   end
 
   def remove_projectile
@@ -58,15 +63,6 @@ class Level1 < Level
     else
       $window.state_manager.current.next_level
     end
-  end
-
-  def game_over
-    $window.sound_manager.play! :alarm
-    TextTyper.type_locked = nil
-    @texts = [
-      TextTyper.new(300, 300, "#{rand > 0.95 ? "FISSION MAILED" : "MISSION FAILED"}", $window.big_font),
-      TextTyper.new(300, 350, "You missed the shot.", $window.big_font),
-    ]
   end
 
 end

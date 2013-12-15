@@ -3,34 +3,71 @@ class Level
   attr_accessor :projectile
   attr_reader :environment, :enemies, :objects
 
-  def initialize
+  def initialize(name, description)
     @enemies, @objects, @scenery = [], [], []
+    @name, @description = name, description
     @scope = Gosu::Image.new($window, "res/scope1.png", false)
+
+    @stage_text = TextTyper.new(300, 250, @name, $window.big_font)
+    @desc_text = TextTyper.new(300, 300, @description)
+    @proceed_text = TextTyper.new(300, 400, "Press return to begin")
+
     Level.current = self
+  end
+
+  def playing?
+    !@stage_text && !@desc_text
   end
 
   def update
     @projectile.update if @projectile
 
-    @enemies.each { |e| e.update }
-    @objects.each { |e| e.update }
+    if $window.button_down? Gosu::KbReturn
+      @stage_text = nil
+      @desc_text = nil
+      TextTyper.type_locked = nil
+    end
 
-    if @distance_text
-      @distance_text.opacity -= 0.02
-      @distance_text.update
-      @distance_text = nil if @distance_text.opacity <= 0
+    unless playing?
+      @stage_text.update
+      @desc_text.update
+      @proceed_text.update
+    else
+      check_distance if $window.button_down? Gosu::KbSpace
+      fire! if $window.button_down? Gosu::MsLeft
+
+      @environment.update
+      @enemies.each { |e| e.update }
+      @objects.each { |e| e.update }
+
+      if @distance_text
+        @distance_text.opacity -= 0.02
+        @distance_text.update
+        @distance_text = nil if @distance_text.opacity <= 0
+      end
     end
   end
 
   def draw
     @projectile.draw if @projectile
 
-    @enemies.each { |e| e.draw }
-    @objects.each { |e| e.draw }
-    @scenery.each { |e| e.draw } 
+    unless playing?
+      $window.draw_quad 0, 0, Gosu::Color::BLACK,
+                        $window.width, 0, Gosu::Color::BLACK,
+                        0, $window.height, Gosu::Color::BLACK,
+                        $window.width, $window.height, Gosu::Color::BLACK, Z::UI
+      @stage_text.draw 
+      @desc_text.draw
+      @proceed_text.draw
+    else
+      @enemies.each { |e| e.draw }
+      @objects.each { |e| e.draw }
+      @scenery.each { |e| e.draw } 
+      @environment.draw
 
-    if @distance_text
-      @distance_text.draw
+      if @distance_text
+        @distance_text.draw
+      end
     end
 
     draw_scope
@@ -38,7 +75,7 @@ class Level
 
   def fire!
     unless @projectile
-      @projectile = Projectile.new($window.mouse_x, $window.mouse_y, @environment)
+      @projectile = Projectile.new($window.mouse_x, $window.mouse_y, @environment, @weapon)
       @projectile.targets = @enemies + @objects + @scenery
     end
   end
@@ -69,6 +106,15 @@ class Level
   # Level end logic?
   def remove_projectile
     raise "Not yet implemented"
+  end
+
+  def game_over
+    $window.sound_manager.play! :alarm
+    TextTyper.type_locked = nil
+    @texts = [
+      TextTyper.new(300, 300, "#{rand > 0.95 ? "FISSION MAILED" : "MISSION FAILED"}", $window.big_font),
+      TextTyper.new(300, 350, "You missed the shot.", $window.big_font),
+    ]
   end
 
   def self.current=(level)
