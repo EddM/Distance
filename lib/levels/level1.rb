@@ -2,7 +2,7 @@ class Level1 < Level
   
   def initialize
     super("Stage 1, Compound Perimeter", "Clear the guard tower.")
-    @environment = Environment.new(5, :east, :snow)
+    @environment = Environment.new(5, :east)
     @weapon = PSG1.new
 
     TextTyper.type_locked = nil
@@ -36,7 +36,7 @@ class Level1 < Level
     @background = Gosu::Image.new($window, "res/level1/bg.png", false)
 
     @song = Gosu::Song.new($window, "res/music1.ogg")
-    @song.play
+    @song.play(true)
   end
 
   def update

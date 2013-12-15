@@ -1,12 +1,17 @@
 class GameplayState < GameState
   
   def initialize
-    @level = Level3.new
+    @level = Level1.new
+  end
+
+  def restart
+    @level = @level.class.new
   end
 
   def next_level
     @level = (case @level
     when Level1 then Level2
+    when Level2 then Level3
     end).new
   end
 

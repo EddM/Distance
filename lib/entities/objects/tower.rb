@@ -1,4 +1,4 @@
-class Tower < GameObject
+class Tower < PenetrableObject
 
   def initialize(x, y, width = 144, height = 428)
     @x, @y, @width, @height = x, y, width, height

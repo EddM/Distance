@@ -10,40 +10,51 @@ class Level
 
     @stage_text = TextTyper.new(300, 250, @name, $window.big_font)
     @desc_text = TextTyper.new(300, 300, @description)
-    @proceed_text = TextTyper.new(300, 400, "Press return to begin")
+    @proceed_text = TextTyper.new(300, 400, "Click to begin")
 
     Level.current = self
   end
 
   def playing?
-    !@game_over && !@stage_text && !@desc_text
+    !@stage_text && !@desc_text
   end
 
   def update
     @projectile.update if @projectile
 
-    if $window.button_down? Gosu::KbReturn
-      @stage_text = nil
-      @desc_text = nil
-      TextTyper.type_locked = nil
-    end
-
     unless playing?
       @stage_text.update
       @desc_text.update
       @proceed_text.update
+
+      unless $window.input_disabled?
+        if $window.button_down? Gosu::MsLeft
+          @stage_text = nil
+          @desc_text = nil
+          TextTyper.type_locked = nil
+          $input_disabled = 100
+        end
+      end
     else
-      check_distance if $window.button_down? Gosu::KbSpace
-      fire! if $window.button_down? Gosu::MsLeft
+      if @game_over
+        unless $window.input_disabled?
+          restart if $window.button_down? Gosu::MsLeft
+        end
+      else
+        unless $window.input_disabled?
+          check_distance if $window.button_down? Gosu::KbSpace
+          fire! if $window.button_down? Gosu::MsLeft
+        end
 
-      @environment.update
-      @enemies.each { |e| e.update }
-      @objects.each { |e| e.update }
+        @environment.update
+        @enemies.each { |e| e.update }
+        @objects.each { |e| e.update }
 
-      if @distance_text
-        @distance_text.opacity -= 0.02
-        @distance_text.update
-        @distance_text = nil if @distance_text.opacity <= 0
+        if @distance_text
+          @distance_text.opacity -= 0.01
+          @distance_text.update
+          @distance_text = nil if @distance_text.opacity <= 0
+        end
       end
     end
   end
@@ -84,7 +95,7 @@ class Level
     unless @distance_text
       (@enemies + @objects).sort_by { |t| t.distance }.each do |target|
         if target.intersects_point?($window.mouse_x, $window.mouse_y)
-          @distance_text = TextTyper.new($window.mouse_x + 25, $window.mouse_y + 25, "RNG: #{target.distance}M")
+          @distance_text = TextTyper.new($window.mouse_x + 25, $window.mouse_y + 25, "RNG: #{target.distance}m")
           return
         end
       end
@@ -109,8 +120,17 @@ class Level
     @texts = [
       TextTyper.new(300, 300, "#{rand > 0.95 ? "FISSION MAILED" : "MISSION FAILED"}", $window.big_font),
       TextTyper.new(300, 350, "You missed the shot.", $window.big_font),
+      TextTyper.new(300, 425, "Click to restart")
     ]
     @game_over = true
+  end
+
+  def restart
+    $window.state_manager.current.restart
+  end
+
+  def complete
+    $window.state_manager.current.next_level
   end
 
   def self.current=(level)

@@ -15,7 +15,7 @@ class GameWindow < Gosu::Window
     @player = Player.new
 
     @state_manager = GameStateManager.new
-    @state_manager << GameplayState.new
+    @state_manager << MenuState.new
   end
 
   def draw
@@ -23,10 +23,15 @@ class GameWindow < Gosu::Window
   end
 
   def update
+    $input_disabled -= 1 if input_disabled?
     self.caption = "#{fps} FPS"
     exit if button_down? KbEscape
 
     @state_manager.current.update
+  end
+
+  def input_disabled?
+    $input_disabled && $input_disabled > 0
   end
 
   def needs_cursor?

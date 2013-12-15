@@ -35,19 +35,26 @@ class Projectile < Entity
             @targets.delete(t) if t.remove
             next
           else
-            remove
+            shot_missed
           end
         elsif t.is_a?(Enemy)
           @targets.delete(t)
           Level.current.enemies.delete(t)
           t.die!(@x, @y)
           remove
+          Level.current.complete if Level.current.enemies.empty?
+          return
         end
       end
     end
 
-    # Go away if beyond boundary
-    remove if @distance >= GameWindow::HorizonMax
+    # if shot was missed
+    shot_missed if !@hit_enemy && @distance >= GameWindow::HorizonMax
+  end
+
+  def shot_missed
+    Level.current.game_over
+    remove
   end
 
   def draw

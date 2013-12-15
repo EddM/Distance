@@ -28,7 +28,7 @@ class Level3 < Level
     enemy.path = [
       { :type => :wait, :period => 400 },
       { :type => :movement, :target => [470, 450] },
-      { :type => :wait, :period => 300 },
+      { :type => :wait, :period => 3500 },
       { :type => :movement, :target => [235, 460] }
     ]
     add_enemy enemy
@@ -38,8 +38,8 @@ class Level3 < Level
 
     @background = Gosu::Image.new($window, "res/level3/bg.png", false)
 
-    @song = Gosu::Song.new($window, "res/music1.ogg")
-    @song.play
+    @song = Gosu::Song.new($window, "res/music3.ogg")
+    @song.play(true)
   end
 
   def update
@@ -61,11 +61,6 @@ class Level3 < Level
 
   def remove_projectile
     @projectile = nil
-    if @enemies.any?
-      game_over
-    else
-      $window.state_manager.current.next_level
-    end
   end
 
 end

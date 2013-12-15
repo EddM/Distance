@@ -24,23 +24,30 @@ class IntroState < GameState
     unless @step >= @data.size
       build_text
     else
-      $window.state_manager.pop
-      $window.state_manager.push GameplayState.new
+      start_game
     end
+  end
+
+  def start_game
+    $window.state_manager.pop
+    $window.state_manager.push GameplayState.new
   end
 
   def update
     @speaker.update
     @texts.each { |t| t.update }
 
-    unless @input_disabled && @input_disabled > 0
+    unless $window.input_disabled?
+      if $window.button_down? Gosu::KbS
+        start_game
+        $input_disabled = 50
+      end
+
       if $window.button_down? Gosu::MsLeft
         next_step
-        @input_disabled = 50
+        $input_disabled = 50
       end
     end
-
-    @input_disabled -= 1 if @input_disabled && @input_disabled > 0
   end
 
   def draw

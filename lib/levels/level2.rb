@@ -44,8 +44,8 @@ class Level2 < Level
 
     @background = Gosu::Image.new($window, "res/level2/bg.png", false)
 
-    @song = Gosu::Song.new($window, "res/music1.ogg")
-    @song.play
+    @song = Gosu::Song.new($window, "res/music2.ogg")
+    @song.play(true)
   end
 
   def update
