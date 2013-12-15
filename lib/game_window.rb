@@ -1,7 +1,7 @@
 class GameWindow < Gosu::Window
   include Gosu
 
-  attr_reader :state_manager, :sound_manager, :font, :big_font
+  attr_reader :state_manager, :sound_manager, :player, :font, :big_font
 
   # The horizon - the point at which projectiles disappear
   HorizonMax = 5_000
@@ -10,13 +10,11 @@ class GameWindow < Gosu::Window
     super(w, h, full)
     $window = self
 
-    @sound_manager = SoundManager.new
-    @font = Font.new(self, "Silom", 18)
-    @big_font = Font.new(self, "Silom", 32)
+    setup_resources
+
+    @player = Player.new
 
     @state_manager = GameStateManager.new
-    # @state_manager << MenuState.new
-    # @state_manager << GameplayState.new
     @state_manager << IntroState.new
   end
 
@@ -50,6 +48,12 @@ class GameWindow < Gosu::Window
               width, 0, Color.argb(0xffcccccc),
               0, height, Color.argb(0xffcccccc),
               width, height, Color.argb(0xffcccccc), -HorizonMax
+  end
+
+  def setup_resources
+    @sound_manager = SoundManager.new
+    @font = Font.new(self, "Silom", 18)
+    @big_font = Font.new(self, "Silom", 32)
   end
 
 end
