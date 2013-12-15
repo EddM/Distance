@@ -16,7 +16,7 @@ class Level
   end
 
   def playing?
-    !@stage_text && !@desc_text
+    !@game_over && !@stage_text && !@desc_text
   end
 
   def update
@@ -103,11 +103,6 @@ class Level
     @scenery << object
   end
 
-  # Level end logic?
-  def remove_projectile
-    raise "Not yet implemented"
-  end
-
   def game_over
     $window.sound_manager.play! :alarm
     TextTyper.type_locked = nil
@@ -115,6 +110,7 @@ class Level
       TextTyper.new(300, 300, "#{rand > 0.95 ? "FISSION MAILED" : "MISSION FAILED"}", $window.big_font),
       TextTyper.new(300, 350, "You missed the shot.", $window.big_font),
     ]
+    @game_over = true
   end
 
   def self.current=(level)
