@@ -24,8 +24,10 @@ Releasy::Project.new do
   end
 end
 
-task :icons do
-  `iconutil -c icns res/Icon.iconset`
+namespace :icons do
+  task :osx do
+    `iconutil -c icns res/Icon.iconset`
+  end
 end
 
 task :ocra do
